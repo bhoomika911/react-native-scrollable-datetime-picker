@@ -2,7 +2,12 @@
 
 This is my first npm package, inspired by "react-native-range-datepicker".
 
-![react-native-scrollable-datetime-picker in action](https://www.google.co.in/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png)
+![react-native-scrollable-datetime-picker in action]
+
+Single Date selection(https://drive.google.com/file/d/1I_aZxZ8amllYq8dRGlchkaHueBk5QtMW/view?usp=sharing)
+
+
+Date Range selection(https://drive.google.com/file/d/1NxK5IbeCwHLKseFyDHaUXuCKlQ4a1vLQ/view?usp=sharing)
 
 ### Install
 ```sh
