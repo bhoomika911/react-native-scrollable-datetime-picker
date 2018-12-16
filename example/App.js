@@ -16,6 +16,7 @@ export default class App extends Component<Props> {
   }
 
   onPressDone(startMillies,endMillies){
+    // alert(startMillies)
     let result = "";
     if(startMillies){
       result += new Date(startMillies);
@@ -34,13 +35,13 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <DatePicker
-          isSingleDateSelection = {true} //For date range selection, make it false
+          // isSingleDateSelection = {true} //For date range selection, make it false
           onPressReset ={()=>this.onPressReset()}
           onPressDone ={(startMillies,endMillies)=>this.onPressDone(startMillies,endMillies)}
           onPressCancel ={()=>this.onPressCancel()}
           startDate= '20181212'
           untilDate= '20181215'
-          // selectedBackgroundColor = "red"
+          selectedBackgroundColor = "red"
         />
       </View>
     );
