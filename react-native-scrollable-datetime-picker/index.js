@@ -125,7 +125,9 @@ class DatePicker extends Component {
 
     self.refs.myDateRangePickerOriginal.onReset();
 
-    self.props.onPressReset();
+    if(self.props.onPressReset){
+      self.props.onPressReset();
+    }
   }
 
   onPressDone(){
@@ -143,12 +145,16 @@ class DatePicker extends Component {
         return false;
       }
 
+
+
       let splitStartTime = timeList[startTimeIndex].timeText.split(":");
       let startHour = ((timeList[startTimeIndex].ampm == "PM") && (parseInt(splitStartTime[0]) !== 12)) ? (12 + parseInt(splitStartTime[0])) : parseInt(splitStartTime[0]);
       let startMin = parseInt(splitStartTime[1]);
       let startMillies = startDate + (startHour * 60 * 60 * 1000) + (startMin * 60 * 1000);
 
-      this.props.onPressDone(startMillies);
+      if(self.props.onPressDone){
+        self.props.onPressDone(startMillies);
+      }
     }else{
       if((startDate == null) || (endDate == null)){
         Alert.alert(
@@ -169,8 +175,12 @@ class DatePicker extends Component {
       let startMillies = startDate + (startHour * 60 * 60 * 1000) + (startMin * 60 * 1000);
       let endMillies = endDate + (endHour * 60 * 60 * 1000) + (endMin * 60 * 1000);
 
-      this.props.onPressDone(startMillies,endMillies);
+      if(self.props.onPressDone){
+        self.props.onPressDone(startMillies,endMillies);
+      }
     }
+
+
 
 
   }
@@ -214,12 +224,12 @@ class DatePicker extends Component {
 
     if(isSingleDateSelection){
       if(startDate == null && this.props.startDate){
-        startDate = Moment(this.props.startDate, "YYYYMMDD").format();
+        startDate = new Date(Moment(this.props.startDate, "YYYYMMDD").format()).getTime();
       }
     }else{
       if(startDate == null && this.props.startDate && this.props.untilDate){
-        startDate = Moment(this.props.startDate, "YYYYMMDD").format();
-        endDate = Moment(this.props.untilDate, "YYYYMMDD").format();
+        startDate = new Date(Moment(this.props.startDate, "YYYYMMDD").format()).getTime();
+        endDate = new Date(Moment(this.props.untilDate, "YYYYMMDD").format()).getTime();
       }
     }
 
@@ -237,7 +247,9 @@ class DatePicker extends Component {
   }
 
   onPressCancel(){
-    self.props.onPressCancel();
+    if(self.props.onPressCancel){
+      self.props.onPressCancel();
+    }
   }
 
   render() {
@@ -280,7 +292,7 @@ class DatePicker extends Component {
         animationType="fadeIn"
         transparent={true}
         visible={true}
-        onRequestClose={() => onPressCancel()}
+        onRequestClose={() => self.onPressCancel()}
       >
         <SafeAreaView style={styles.mainContainer}>
           {
