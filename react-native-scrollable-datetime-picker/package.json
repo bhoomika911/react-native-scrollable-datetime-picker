@@ -1,0 +1,47 @@
+{
+  "_from": "react-native-scrollable-datetime-picker",
+  "_id": "react-native-scrollable-datetime-picker@1.1.0",
+  "_location": "/react-native-scrollable-datetime-picker",
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-scrollable-datetime-picker",
+    "name": "react-native-scrollable-datetime-picker",
+    "escapedName": "react-native-scrollable-datetime-picker",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "author": {
+    "name": "Bhoomika Kathiriya",
+    "email": "bhoomi9111210@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/bhoomika911/react-native-scrollable-datetime-picker/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "moment": "^2.17.1",
+    "prop-types": "^15.6.0"
+  },
+  "deprecated": false,
+  "description": "React native custom datepicker",
+  "homepage": "https://github.com/bhoomika911/react-native-scrollable-datetime-picker.git#readme",
+  "keywords": [
+    "react-native",
+    "custom",
+    "date-picker",
+    "range",
+    "javascript"
+  ],
+  "main": "index.js",
+  "name": "react-native-scrollable-datetime-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhoomika911/react-native-scrollable-datetime-picker.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.0"
+}
