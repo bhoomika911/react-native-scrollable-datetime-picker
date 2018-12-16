@@ -39,9 +39,9 @@ export default class App extends Component<Props> {
           onPressReset ={()=>this.onPressReset()}
           onPressDone ={(startMillies,endMillies)=>this.onPressDone(startMillies,endMillies)}
           onPressCancel ={()=>this.onPressCancel()}
-          startDate= '20181212'
-          untilDate= '20181215'
-          selectedBackgroundColor = "red"
+          // startDate= '20181212'
+          // untilDate= '20181215'
+          // selectedBackgroundColor = "red"
         />
       </View>
     );
