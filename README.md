@@ -2,7 +2,7 @@
 
 This is my first npm package, inspired by "react-native-range-datepicker".
 
-![image](https://drive.google.com/uc?export=view&id=1HFzXE2SgHdFlswm2x_CCVOKzAJYbgtNA)![image](https://drive.google.com/uc?export=view&id=1oS9cEI7nnHM9cNxkKERvc5Bw6RzI7znh)
+![image](https://drive.google.com/uc?export=view&id=1HFzXE2SgHdFlswm2x_CCVOKzAJYbgtNA)                ![image](https://drive.google.com/uc?export=view&id=1oS9cEI7nnHM9cNxkKERvc5Bw6RzI7znh)
 
 ### Install
 ```sh
