@@ -2,7 +2,7 @@
 
 This is my first npm package, inspired by "react-native-range-datepicker".
 
-![image](https://drive.google.com/uc?export=view&id=1I_aZxZ8amllYq8dRGlchkaHueBk5QtMW)
+![image](https://drive.google.com/uc?export=view&id=1HFzXE2SgHdFlswm2x_CCVOKzAJYbgtNA)
 
 
 ![Date Range selection](https://drive.google.com/file/d/1NxK5IbeCwHLKseFyDHaUXuCKlQ4a1vLQ/view?usp=sharing)
