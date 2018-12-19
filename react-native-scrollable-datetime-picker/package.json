@@ -1,6 +1,6 @@
 {
   "_from": "react-native-scrollable-datetime-picker",
-  "_id": "react-native-scrollable-datetime-picker@1.5.0",
+  "_id": "react-native-scrollable-datetime-picker@1.6.0",
   "_location": "/react-native-scrollable-datetime-picker",
   "_requested": {
     "type": "tag",
@@ -44,5 +44,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.5.0"
+  "version": "1.6.0"
 }
