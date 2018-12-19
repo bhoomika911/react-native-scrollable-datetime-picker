@@ -26,8 +26,8 @@
     "react-native-vector-icons": "^6.1.0"
   },
   "deprecated": false,
-  "description": "React native custom datepicker",
-  "homepage": "https://github.com/bhoomika911/react-native-scrollable-datetime-picker.git#readme",
+  "description": "React native scrollable date-time picker (Inspired by React native range datepicker)",
+  "homepage": "https://github.com/bhoomika911/react-native-scrollable-datetime-picker#readme",
   "keywords": [
     "react-native",
     "custom",
