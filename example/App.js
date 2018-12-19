@@ -39,7 +39,7 @@ export default class App extends Component<Props> {
           onPressReset ={()=>this.onPressReset()}
           onPressDone ={(startMillies,endMillies)=>this.onPressDone(startMillies,endMillies)}
           onPressCancel ={()=>this.onPressCancel()}
-          hideTimePicker = {true}
+          // hideTimePicker = {true}
           // startDate= '20181212'
           // untilDate= '20181215'
           // selectedBackgroundColor = "red"

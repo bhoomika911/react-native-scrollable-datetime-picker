@@ -22,6 +22,7 @@ import DatePicker from "react-native-scrollable-datetime-picker"
   startDate= '20181212'
   untilDate= '20181215'
   selectedBackgroundColor = "red"
+  /* hideTimePicker = {true} */
 />
 
 onPressReset(){
@@ -55,6 +56,7 @@ static propTypes = {
 	onPressCancel: PropTypes.func,
 	selectedBackgroundColor: PropTypes.string,
   isSingleDateSelection : PropTypes.boolean
+  hideTimePicker : PropTypes.boolean
 }
 ```
 
