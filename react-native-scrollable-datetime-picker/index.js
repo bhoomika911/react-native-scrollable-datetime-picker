@@ -12,8 +12,11 @@ import {
   SafeAreaView,
   Modal,
   Alert,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 import Moment from "moment";
 import DatepickerRange from './react-native-range-datepicker';
 
@@ -132,7 +135,7 @@ class DatePicker extends Component {
 
   onPressDone(){
     let {timeList,startDate,endDate,startTimeIndex,endTimeIndex} = self.state;
-    let {isSingleDateSelection} = this.props;
+    let {isSingleDateSelection,hideTimePicker} = this.props;
 
     if(isSingleDateSelection) {
       if(startDate == null){
@@ -147,10 +150,26 @@ class DatePicker extends Component {
 
 
 
-      let splitStartTime = timeList[startTimeIndex].timeText.split(":");
-      let startHour = ((timeList[startTimeIndex].ampm == "PM") && (parseInt(splitStartTime[0]) !== 12)) ? (12 + parseInt(splitStartTime[0])) : parseInt(splitStartTime[0]);
-      let startMin = parseInt(splitStartTime[1]);
-      let startMillies = startDate + (startHour * 60 * 60 * 1000) + (startMin * 60 * 1000);
+      let startMillies = startDate;
+      if(!hideTimePicker){
+        let splitStartTime = timeList[startTimeIndex].timeText.split(":");
+        let startHour = 0;
+        if((timeList[startTimeIndex].ampm == "PM")) {
+          if((parseInt(splitStartTime[0]) !== 12)){
+            startHour = (12 + parseInt(splitStartTime[0]));
+          }else{
+            startHour = parseInt(splitStartTime[0]);
+          }
+        }else{
+          if((parseInt(splitStartTime[0]) !== 12)){
+            startHour = parseInt(splitStartTime[0]);
+          }else{
+            startHour =0;
+          }
+        }
+        let startMin = parseInt(splitStartTime[1]);
+        startMillies += ((startHour * 60 * 60 * 1000) + (startMin * 60 * 1000));
+      }
 
       if(self.props.onPressDone){
         self.props.onPressDone(startMillies);
@@ -166,23 +185,55 @@ class DatePicker extends Component {
         return false;
       }
 
-      let splitStartTime = timeList[startTimeIndex].timeText.split(":");
-      let splitEndTime = timeList[endTimeIndex].timeText.split(":");
-      let startHour = ((timeList[startTimeIndex].ampm == "PM") && (parseInt(splitStartTime[0]) !== 12)) ? (12 + parseInt(splitStartTime[0])) : parseInt(splitStartTime[0]);
-      let endHour = ((timeList[endTimeIndex].ampm == "PM") && (parseInt(splitEndTime[0]) !== 12)) ? (12 + parseInt(splitEndTime[0])) : parseInt(splitEndTime[0]);
-      let startMin = parseInt(splitStartTime[1]);
-      let endMin = parseInt(splitEndTime[1]);
-      let startMillies = startDate + (startHour * 60 * 60 * 1000) + (startMin * 60 * 1000);
-      let endMillies = endDate + (endHour * 60 * 60 * 1000) + (endMin * 60 * 1000);
+      let startMillies = startDate;
+      let endMillies = endDate;
+      if(!hideTimePicker){
+        let splitStartTime = timeList[startTimeIndex].timeText.split(":");
+        let splitEndTime = timeList[endTimeIndex].timeText.split(":");
+
+        let startHour = 0;
+        let endHour = 0;
+
+
+        if((timeList[startTimeIndex].ampm == "PM")) {
+          if((parseInt(splitStartTime[0]) !== 12)){
+            startHour = (12 + parseInt(splitStartTime[0]));
+          }else{
+            startHour = parseInt(splitStartTime[0]);
+          }
+        }else{
+          if((parseInt(splitStartTime[0]) !== 12)){
+            startHour = parseInt(splitStartTime[0])
+          }else{
+            startHour =0;
+          }
+        }
+
+        if((timeList[endTimeIndex].ampm == "PM")) {
+          if((parseInt(splitEndTime[0]) !== 12)){
+            endHour = (12 + parseInt(splitEndTime[0]));
+          }else{
+            endHour = parseInt(splitEndTime[0]);
+          }
+        }else{
+          if((parseInt(splitEndTime[0]) !== 12)){
+            endHour = parseInt(splitEndTime[0]);
+          }else{
+            endHour =0;
+          }
+        }
+
+        let startMin = parseInt(splitStartTime[1]);
+        let endMin = parseInt(splitEndTime[1]);
+
+        startMillies += ((startHour * 60 * 60 * 1000) + (startMin * 60 * 1000));
+        endMillies += ((endHour * 60 * 60 * 1000) + (endMin * 60 * 1000));
+      }
 
       if(self.props.onPressDone){
         self.props.onPressDone(startMillies,endMillies);
       }
     }
-
-
-
-
   }
 
   onPressTime(index){
@@ -214,7 +265,9 @@ class DatePicker extends Component {
     self.setState({
       selectedYear : selectedYear
     },function(){
-      self.refs.myDatePicker.getMonthStack();
+      if(self.refs && self.refs.myDatePicker && self.refs.myDatePicker.getMonthStack){
+        self.refs.myDatePicker.getMonthStack();
+      }
     });
   }
 
@@ -253,7 +306,7 @@ class DatePicker extends Component {
   }
 
   render() {
-    let {onPressCancel,isSingleDateSelection} = this.props;
+    let {onPressCancel,isSingleDateSelection,hideTimePicker} = this.props;
     let {timeList,yearList,startDate,endDate,startTimeIndex,endTimeIndex,selectedYear} = this.state;
     let selIndexToShow = -1;
 
@@ -266,16 +319,20 @@ class DatePicker extends Component {
     }
 
     let startDateTime = (startDate == null) ?
-                        "Date, Time"
+                        ((!hideTimePicker) ? "Date, Time" : "Date")
                         :
-                        (Moment(new Date(startDate)).format("DD MMM YYYY")  + (startTimeIndex >= 0 ? (", " + timeList[startTimeIndex].timeText + " " + timeList[startTimeIndex].ampm) : "" ));
+                        (Moment(new Date(startDate)).format("DD MMM YYYY")  +
+                        ((!hideTimePicker) && (startTimeIndex >= 0) ? (", " + timeList[startTimeIndex].timeText + " " + timeList[startTimeIndex].ampm) : "" ));
 
    let endDateTime = (endDate == null) ?
-                      "Date, Time"
+                      ((!hideTimePicker) ? "Date, Time" : "Date")
                       :
-                      (Moment(new Date(endDate)).format("DD MMM YYYY")  + (endTimeIndex >= 0 ? (", " + timeList[endTimeIndex].timeText + " " +  timeList[endTimeIndex].ampm) : "" ));
+                      (Moment(new Date(endDate)).format("DD MMM YYYY")  +
+                      ((!hideTimePicker) && (endTimeIndex >= 0) ? (", " + timeList[endTimeIndex].timeText + " " +  timeList[endTimeIndex].ampm) : "" ));
 
-    let footerDoneDisableColor = ((startDate == null) || (endDate == null)) ? {backgroundColor : 'rgba(0,0,0,0.3)'} : {};
+    // let footerDoneDisableColor =  ((startDate == null) || (endDate == null)) ? {backgroundColor : 'rgba(0,0,0,0.3)'} : {};
+    let footerDoneDisableColor =  {};
+
 
     let startDateTimeForDP = (startDate == null) ?
                         null
@@ -287,6 +344,8 @@ class DatePicker extends Component {
                       :
                       Moment(new Date(endDate)).format("YYYYMMDD");
 
+    let title = (!hideTimePicker) ? "Seleted Date, Time" : "Selected Date";
+
     return (
       <Modal
         animationType="fadeIn"
@@ -297,17 +356,42 @@ class DatePicker extends Component {
         <SafeAreaView style={styles.mainContainer}>
           {
             isSingleDateSelection ?
-            <View style={[styles.headerContainer,{alignItems : 'center',justifyContent : 'center'}]}>
-              <View style = {styles.headerItemForSingle}>
-                <View style= {styles.startDateViewForSingle}>
-                   <Text style = {[styles.startTitle]}>Selected Date</Text>
+            <View style={styles.headerContainer}>
+              <View style = {[styles.headerItemForSingle]}>
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  style={styles.backIconContainer}
+                  onPress={() => onPressCancel()}
+                >
+                  <Ionicons
+                    name="ios-arrow-back"
+                    style={styles.backIconStyle}
+                  />
+                </TouchableHighlight>
+
+                <View style= {[styles.startDateView,{alignItems : 'center',justifyContent : 'center'}]}>
+                   <Text style = {[styles.startTitle]}>{title}</Text>
                    <Text style = {[styles.startDate]}>{startDateTime}</Text>
                 </View>
+                <View style={styles.backIconContainer}/>
               </View>
+
+
             </View>
             :
             <View style={styles.headerContainer}>
               <View style = {styles.headerItem}>
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  style={styles.backIconContainer}
+                  onPress={() => onPressCancel()}
+                >
+                  <Ionicons
+                    name="ios-arrow-back"
+                    style={styles.backIconStyle}
+                  />
+                </TouchableHighlight>
+
                 <View style= {styles.startDateView}>
                    <Text style = {[styles.startTitle]}>Start</Text>
                    <Text style = {[styles.startDate]}>{startDateTime}</Text>
@@ -315,6 +399,13 @@ class DatePicker extends Component {
               </View>
 
               <View style = {styles.headerItem}>
+                <View style={styles.nextIconBg}>
+                  <Ionicons
+                    name="md-arrow-forward"
+                    style={styles.nexIconStyle}
+                  />
+                </View>
+
                 <View style= {styles.startDateView}>
                    <Text style = {[styles.startTitle]}>End</Text>
                    <Text style = {[styles.startDate]}>{endDateTime}</Text>
@@ -322,6 +413,7 @@ class DatePicker extends Component {
               </View>
             </View>
           }
+
 
           <View style={styles.mainYearView}>
             <View style={styles.timePicker}>
@@ -348,7 +440,7 @@ class DatePicker extends Component {
           </View>
 
 
-          <View style={styles.body}>
+          <View style={[styles.body,(hideTimePicker ? {marginBottom : 50} : {})]}>
             <DatepickerRange
                 ref = "myDateRangePickerOriginal"
                 isSingleDateSelection = {isSingleDateSelection}
@@ -363,14 +455,20 @@ class DatePicker extends Component {
             />
           </View>
 
+        {
+          (hideTimePicker) ?
+          null
+          :
           <View style={styles.mainTimeView}>
-            <View style={styles.timerTitleMain}>
-              <View style={styles.timeTitleLine}/>
-              <View style={styles.timeTitleMiddle}>
-                <Text style = {[styles.timeTileTxt]}>Time</Text>
+            {
+              <View style={styles.timerTitleMain}>
+                <View style={styles.timeTitleLine}/>
+                <View style={styles.timeTitleMiddle}>
+                  <Text style = {[styles.timeTileTxt]}>Time</Text>
+                </View>
+                <View style={styles.timeTitleLine}/>
               </View>
-              <View style={styles.timeTitleLine}/>
-            </View>
+            }
 
             <View style={styles.timePicker}>
               <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
@@ -393,25 +491,23 @@ class DatePicker extends Component {
               }
               </ScrollView>
             </View>
-            {
-              // <View style={styles.timeTitle} pointerEvents = "box-none">
-              //   <Text style = {[styles.timeTileTxt]}>Time</Text>
-              // </View>
-            }
-
-
           </View>
+        }
 
 
-          <View style={styles.footerContainer}>
+          {
+            <View style={styles.footerContainer}>
             <TouchableHighlight
               underlayColor={"transparent"}
               onPress={() => self.onPressReset()}
               style={[
                 styles.footerButtonsContainer,
+                // { backgroundColor: "#ffffff" },
+                Platform.OS == "android"? { backgroundColor: "rgba(0,0,0,0.1 )" } : { backgroundColor: "#ffffff" },
+
               ]}
             >
-              <Text style={[styles.footerText]}>
+              <Text style={[styles.footerText, { color: "#1c91e5" }]}>
                 Reset
               </Text>
             </TouchableHighlight>
@@ -420,24 +516,16 @@ class DatePicker extends Component {
               onPress={() => self.onPressDone()}
               style={[
                 styles.footerButtonsContainer,
+                { backgroundColor: "#23c38d" },
+                footerDoneDisableColor
               ]}
             >
-              <Text style={[styles.footerText]}>
+              <Text style={[styles.footerText, { color: "#ffffff" }]}>
                 Done
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor={"transparent"}
-              onPress={() => self.onPressCancel()}
-              style={[
-                styles.footerButtonsContainer,
-              ]}
-            >
-              <Text style={[styles.footerText]}>
-                Cancel
-              </Text>
-            </TouchableHighlight>
           </View>
+          }
         </SafeAreaView>
       </Modal>
     );
@@ -458,12 +546,14 @@ const styles = StyleSheet.create({
     borderBottomWidth : 1,
   },
   backIconContainer : {
-    width : 50,
+    width : 35,
+    // backgroundColor : 'red',
     alignItems : 'center',
     justifyContent : 'center'
   },
   backIconStyle : {
     fontSize : 30,
+    paddingHorizontal  :10,
     color : 'rgba(0,0,0,0.8)'
   },
   mainTimeView : {
@@ -558,13 +648,13 @@ const styles = StyleSheet.create({
     flex : 1,
     flexDirection : 'row',
     alignItems : 'center',
-    paddingLeft : 10
+    // paddingLeft : 10
   },
   headerItemForSingle : {
     flex : 1,
-    // flexDirection : 'row',
+    flexDirection : 'row',
     alignItems : 'center',
-    paddingLeft : 10
+    // paddingLeft : 10
   },
   nextIconBg : {
     margin : 10,
@@ -618,6 +708,9 @@ const styles = StyleSheet.create({
   },
   startDateViewForSingle : {
     alignItems : 'center'
+  },
+  startDateView  :{
+    flex : 1
   }
 });
 
