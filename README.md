@@ -3,7 +3,6 @@
 This is my first npm package, inspired by "react-native-range-datepicker".
 
 
-
 ![Sigle date selection demo](https://drive.google.com/uc?export=view&id=1HFzXE2SgHdFlswm2x_CCVOKzAJYbgtNA) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Date Range selecting demo](https://drive.google.com/uc?export=view&id=1oS9cEI7nnHM9cNxkKERvc5Bw6RzI7znh)
 
 ### Install
