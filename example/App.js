@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import DatePicker from "react-native-scrollable-datetime-picker"
+import DatePicker from "./react-native-scrollable-datetime-picker"
 type Props = {};
 export default class App extends Component<Props> {
   onPressReset(){
@@ -39,6 +39,7 @@ export default class App extends Component<Props> {
           onPressReset ={()=>this.onPressReset()}
           onPressDone ={(startMillies,endMillies)=>this.onPressDone(startMillies,endMillies)}
           onPressCancel ={()=>this.onPressCancel()}
+          hideTimePicker = {true}
           // startDate= '20181212'
           // untilDate= '20181215'
           // selectedBackgroundColor = "red"
